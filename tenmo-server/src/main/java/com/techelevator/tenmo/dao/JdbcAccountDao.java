@@ -71,6 +71,14 @@ public class JdbcAccountDao implements AccountDao {
         jdbcTemplate.update(sql, account.getBalance(), account.getAccountId());
     }
 
+    @Override
+public void transferTEBucks(int fromAccountId, int toAccountId, BigDecimal amount) {
+    String sql = "BEGIN TRANSACTION; " +
+                 "UPDATE accounts SET balance = balance - ? WHERE account_id = ?; " +
+                 "UPDATE accounts SET balance = balance + ? WHERE account_id = ?; " +
+                 "COMMIT;";
+    jdbcTemplate.update(sql, amount, fromAccountId, amount, toAccountId);
+}
 
     private Account mapRowToAccount(SqlRowSet rowSet) {
         Account account = new Account();
