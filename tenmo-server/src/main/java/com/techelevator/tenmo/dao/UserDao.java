@@ -4,16 +4,13 @@ import com.techelevator.tenmo.model.User;
 
 import java.util.List;
 
-public interface UserDao {
+public interface UserDAO {
 
     List<User> findAll();
 
-    List<User> findAllExcludingCurrentUser(String username);
-    User getUserById(int id);
-
     User findByUsername(String username);
 
-    int findIdByUsername(String username);
-
     boolean create(String username, String password);
+
+    User findByUserId(Integer userId);
 }
