@@ -7,7 +7,9 @@ import java.util.List;
 public interface TransferDao {
 
     List<Transfer> getAllTransfers(Integer userId);
-
+    
+    List<Transfer> getTransfersByUserId(int userId);
+    
     Transfer getTransferById(Integer userId, Integer transferId);
 
     Transfer createTransfer(Integer userId, Transfer transfer);
