@@ -20,7 +20,6 @@ The project is created with:
 * JUnit
 * Spring
 * OOP
-* PostgreSQL
 * IntelliJ
 * PostgreSQL
 * Postman
