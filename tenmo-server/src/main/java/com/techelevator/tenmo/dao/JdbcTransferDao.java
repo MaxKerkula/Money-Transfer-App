@@ -37,6 +37,12 @@ public class JdbcTransferDao implements TransferDao {
     }
 
     @Override
+public List<Transfer> getTransfersByUserId(int userId) {
+    String sql = "SELECT * FROM transfers WHERE account_from = ? OR account_to = ?";
+    return jdbcTemplate.query(sql, new TransferRowMapper(), userId, userId);
+}
+    
+    @Override
     public Transfer getTransferById(Integer userId, Integer transferId) {
         String sql = "SELECT t.transfer_id, t.transfer_type_id, t.transfer_status_id,\n" +
                 "t.account_from, t.account_to, t.amount\n" +
