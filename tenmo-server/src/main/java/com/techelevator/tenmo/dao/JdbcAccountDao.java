@@ -64,21 +64,14 @@ public class JdbcAccountDao implements AccountDao {
     }
 
     @Override
-    public void updateBalance(Account account) {
-        String sql = "UPDATE account " +
-                "SET balance = ? " +
-                "WHERE account_id = ?;";
-        jdbcTemplate.update(sql, account.getBalance(), account.getAccountId());
+    public void updateBalance(int userId, BigDecimal delta) {
+        String sql = "UPDATE accounts SET balance = balance + ? WHERE user_id = ? AND balance + ? >= 0";
+        int rowsAffected = jdbcTemplate.update(sql, delta, userId, delta);
+        if (rowsAffected == 0) {
+            throw new InsufficientFundsException("Insufficient funds for transfer.");
+        }
     }
 
-    @Override
-public void transferTEBucks(int fromAccountId, int toAccountId, BigDecimal amount) {
-    String sql = "BEGIN TRANSACTION; " +
-                 "UPDATE accounts SET balance = balance - ? WHERE account_id = ?; " +
-                 "UPDATE accounts SET balance = balance + ? WHERE account_id = ?; " +
-                 "COMMIT;";
-    jdbcTemplate.update(sql, amount, fromAccountId, amount, toAccountId);
-}
 
     private Account mapRowToAccount(SqlRowSet rowSet) {
         Account account = new Account();
