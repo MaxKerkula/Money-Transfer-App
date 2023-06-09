@@ -16,6 +16,9 @@ public interface AccountDao {
     BigDecimal getBalance(Integer userId);
 
     void updateBalance(Account account);
+    
+    void transferTEBucks(int fromAccountId, int toAccountId, BigDecimal amount);
+
 
 }
 
